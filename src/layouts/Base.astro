@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFab from '../components/WhatsAppFab.astro';
 import { site, type Lang } from '../i18n/ui';
-import { alternatePath } from '../i18n/utils';
+import { alternatePath, withBase } from '../i18n/utils';
 
 interface Props { lang: Lang; title: string; description: string; noindex?: boolean }
 const { lang, title, description, noindex = false } = Astro.props;
@@ -36,8 +36,8 @@ const ld = {
   <link rel="alternate" hreflang="tr" href={altTr} />
   <link rel="alternate" hreflang="en" href={altEn} />
   <link rel="alternate" hreflang="x-default" href={altTr} />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="sitemap" href="/sitemap-index.xml" />
+  <link rel="icon" href={withBase("/favicon.svg")} type="image/svg+xml" />
+  <link rel="sitemap" href={withBase("/sitemap-index.xml")} />
   <meta property="og:type" content="website" />
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />

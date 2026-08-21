@@ -1,9 +1,10 @@
 ---
 import Legal from '../views/Legal.astro';
 import { site } from '../i18n/ui';
+import { r } from '../i18n/utils';
 ---
 <Legal lang="tr" title="Gizlilik Politikası">
   <p>Bu web sitesi, ziyaretçi davranışını izlemek için üçüncü taraf çerezleri kullanmaz. Trafik ölçümü için çerezsiz ve anonim çalışan Cloudflare Web Analytics kullanılır.</p>
-  <p>Form aracılığıyla paylaştığınız bilgiler yalnızca <a href="/kvkk/">KVKK Aydınlatma Metni</a>'nde belirtilen amaçlarla işlenir.</p>
+  <p>Form aracılığıyla paylaştığınız bilgiler yalnızca <a href={r('kvkk', 'tr')}>KVKK Aydınlatma Metni</a>'nde belirtilen amaçlarla işlenir.</p>
   <p>Sorularınız için: <a href={`mailto:${site.email}`}>{site.email}</a></p>
 </Legal>

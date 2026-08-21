@@ -3,8 +3,13 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
+const site = process.env.ASTRO_SITE ?? 'https://luvitaenerji.com';
+// Alan adı bağlanana kadar GitHub Pages proje alt yolunda yayınlanıyor (ASTRO_BASE).
+const base = process.env.ASTRO_BASE ?? '/';
+
 export default defineConfig({
-  site: 'https://luvitaenerji.com',
+  site,
+  base,
   i18n: {
     defaultLocale: 'tr',
     locales: ['tr', 'en'],
