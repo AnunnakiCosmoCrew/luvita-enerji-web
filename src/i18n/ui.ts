@@ -21,9 +21,9 @@ export const site = {
   name: 'Luvita Enerji',
   parent: 'Luvita Teknoloji Enerji Yazılım San. ve Tic. Ltd. Şti.',
   address: 'Bodrum, Muğla / Türkiye', // il düzeyi — kayıtlı adres konut olduğu için yayımlanmaz (bkz. adr/0002)
-  phone: '+90 000 000 00 00',      // TODO: gerçek numara
-  whatsapp: '900000000000',        // TODO: gerçek numara (ülke kodu ile, + olmadan)
-  email: 'info@luvitaenerji.com',  // TODO: kurumsal e-posta
+  phone: '+90 505 986 80 76',
+  whatsapp: '905059868076',
+  email: 'mertugrul@gmail.com',    // TODO: kurumsal e-posta (info@luvitaenerji.com) hazır olunca değiştir
   web3formsKey: 'YOUR_WEB3FORMS_ACCESS_KEY', // TODO
   turnstileSiteKey: '',            // TODO (boşsa Turnstile gösterilmez)
 };
