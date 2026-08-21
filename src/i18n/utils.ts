@@ -15,10 +15,11 @@ export function r(key: keyof typeof routes, lang: Lang): string {
 
 /** Find the same page in the other language (falls back to that language's home). */
 export function alternatePath(pathname: string, target: Lang): string {
-  const norm = pathname.endsWith('/') ? pathname : pathname + '/';
+  let norm = pathname.replace(/index\.html$/, '');
+  if (!norm.endsWith('/')) norm += '/';
   for (const pair of Object.values(routes)) {
     const match = (Object.keys(pair) as Lang[]).find((l) => pair[l] === norm);
-    if (match && match !== target) return pair[target];
+    if (match) return pair[target];
   }
   return routes.home[target];
 }
