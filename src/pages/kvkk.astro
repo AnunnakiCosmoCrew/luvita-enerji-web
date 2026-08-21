@@ -1,0 +1,15 @@
+---
+import Legal from '../views/Legal.astro';
+import { site } from '../i18n/ui';
+---
+<Legal lang="tr" title="KVKK Aydınlatma Metni">
+  <p><strong>Veri Sorumlusu:</strong> {site.parent}, {site.address}.</p>
+  <p>6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") uyarınca, web sitemiz üzerinden keşif/teklif formu ile paylaştığınız ad-soyad, telefon, e-posta, adres/ilçe, mülk ve tüketim bilgileri; <strong>teklif hazırlamak, sizinle iletişime geçmek ve keşif randevusu planlamak</strong> amaçlarıyla, KVKK m.5/2-c (sözleşmenin kurulması) ve m.5/2-f (meşru menfaat) hukuki sebeplerine dayanılarak işlenir.</p>
+  <h2>Aktarım</h2>
+  <p>Verileriniz, form altyapısı sağlayıcısı (Web3Forms) ve e-posta hizmet sağlayıcımız aracılığıyla tarafımıza iletilir; teklif hazırlanması için gerekli olduğu ölçüde tedarikçilerimizle (ör. ekipman üreticisi) ad ve adres bilgisi paylaşılabilir. Üçüncü kişilere pazarlama amacıyla aktarılmaz.</p>
+  <h2>Saklama</h2>
+  <p>Teklif süreci sonuçlanmayan talepler 12 ay, sözleşmeye dönüşen talepler ilgili mevzuattaki zamanaşımı süreleri boyunca saklanır.</p>
+  <h2>Haklarınız</h2>
+  <p>KVKK m.11 kapsamında; verilerinizin işlenip işlenmediğini öğrenme, düzeltilmesini veya silinmesini isteme, işlemeye itiraz etme haklarına sahipsiniz. Başvurularınızı <a href={`mailto:${site.email}`}>{site.email}</a> adresine iletebilirsiniz.</p>
+  <p class="text-slate-400">Bu metin taslaktır; yayına alınmadan önce hukuk danışmanı kontrolünden geçirilmelidir.</p>
+</Legal>

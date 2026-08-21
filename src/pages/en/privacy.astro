@@ -1,0 +1,17 @@
+---
+import Legal from '../../views/Legal.astro';
+import { site } from '../../i18n/ui';
+---
+<Legal lang="en" title="Privacy & Data Protection Notice">
+  <p><strong>Data controller:</strong> {site.parent}, {site.address}.</p>
+  <p>Under Turkish Law No. 6698 on the Protection of Personal Data (KVKK), the details you share through our survey/quote form — name, phone, email, district, property and consumption information — are processed to <strong>prepare a quote, contact you and schedule a site survey</strong>, on the legal bases of contract formation and legitimate interest.</p>
+  <h2>Sharing</h2>
+  <p>Your details reach us via our form provider (Web3Forms) and email provider. Where needed to prepare a quote, name and address may be shared with our suppliers (e.g. the equipment manufacturer). They are never shared with third parties for marketing.</p>
+  <h2>Retention</h2>
+  <p>Requests that do not lead to a contract are kept for 12 months; those that do are kept for the statutory limitation periods.</p>
+  <h2>Cookies & analytics</h2>
+  <p>This site uses no third-party tracking cookies. Traffic is measured with Cloudflare Web Analytics, which is cookie-free and anonymous.</p>
+  <h2>Your rights</h2>
+  <p>You may ask whether your data is processed, request correction or deletion, and object to processing. Contact <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+  <p class="text-slate-400">Draft — to be reviewed by legal counsel before publication.</p>
+</Legal>

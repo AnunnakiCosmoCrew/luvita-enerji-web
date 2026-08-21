@@ -1,0 +1,10 @@
+---
+import { getCollection } from 'astro:content';
+import SolutionDetail from '../../../views/SolutionDetail.astro';
+export async function getStaticPaths() {
+  const entries = await getCollection('solutions', (e) => e.data.lang === 'en');
+  return entries.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+const { entry } = Astro.props;
+---
+<SolutionDetail entry={entry} lang="en" />

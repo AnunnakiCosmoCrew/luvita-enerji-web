@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import { useTranslations } from '../i18n/utils';
+import { site, type Lang } from '../i18n/ui';
+const { lang } = Astro.props as { lang: Lang };
+const t = useTranslations(lang);
+const rows = [
+  [t('contact.address'), site.address, null],
+  [t('contact.phone'), site.phone, `tel:${site.phone.replace(/\s/g, '')}`],
+  [t('contact.email'), site.email, `mailto:${site.email}`],
+  [t('contact.hours'), t('contact.hours.v'), null],
+];
+---
+<Base lang={lang} title={t('contact.title')} description={t('contact.sub')}>
+  <div class="container-x py-14">
+    <h1 class="text-3xl sm:text-4xl">{t('contact.title')}</h1>
+    <p class="mt-3 max-w-xl text-slate-600">{t('contact.sub')}</p>
+    <div class="mt-10 grid gap-8 lg:grid-cols-2">
+      <dl class="card divide-y divide-slate-100">
+        {rows.map(([k, v, href]) => (
+          <div class="grid grid-cols-[130px_1fr] gap-4 py-3 text-sm first:pt-0 last:pb-0">
+            <dt class="font-semibold text-slate-500">{k}</dt>
+            <dd class="text-slate-800">{href ? <a class="hover:underline" href={href}>{v}</a> : v}</dd>
+          </div>
+        ))}
+      </dl>
+      <div class="card">
+        <h2 class="text-lg">{lang === 'tr' ? 'Hizmet bölgesi' : 'Service area'}</h2>
+        <p class="mt-2 text-sm text-slate-600">{lang === 'tr'
+          ? 'Bodrum yarımadasının tamamı: Gündoğan, Yalıkavak, Türkbükü, Gölköy, Torba, Bitez, Ortakent, Gümüşlük, Turgutreis, Konacık, Bodrum merkez, Gümbet ve çevresi. Milas ve Datça için keşif planlanabilir.'
+          : 'The whole Bodrum peninsula: Gündoğan, Yalıkavak, Türkbükü, Gölköy, Torba, Bitez, Ortakent, Gümüşlük, Turgutreis, Konacık, Bodrum centre, Gümbet and surroundings. Surveys in Milas and Datça can be arranged.'}</p>
+        <p class="mt-4 text-xs text-slate-500">{lang === 'tr' ? 'Keşifler yerinde yapılır; ofis ziyaretleri randevu ile.' : 'Surveys are on-site; office visits by appointment.'}</p>
+      </div>
+    </div>
+  </div>
+  <CTA lang={lang} />
+</Base>

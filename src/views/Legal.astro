@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import type { Lang } from '../i18n/ui';
+const { lang, title } = Astro.props as { lang: Lang; title: string };
+---
+<Base lang={lang} title={title} description={title} noindex>
+  <div class="container-x max-w-3xl py-14">
+    <h1 class="text-3xl sm:text-4xl">{title}</h1>
+    <div class="prose-luvita mt-8 text-sm"><slot /></div>
+  </div>
+</Base>

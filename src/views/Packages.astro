@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import PackageCard from '../components/PackageCard.astro';
+import CTA from '../components/CTA.astro';
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+const { lang } = Astro.props as { lang: Lang };
+const t = useTranslations(lang);
+const packages = (await getCollection('packages')).filter((e) => e.data.lang === lang).sort((a, b) => a.data.order - b.data.order);
+---
+<Base lang={lang} title={t('nav.packages')} description={t('packages.sub')}>
+  <Section eyebrow={t('packages.eyebrow')} title={t('packages.title')} sub={t('packages.sub')}>
+    <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">{packages.map((p) => <PackageCard p={p} lang={lang} />)}</div>
+    <p class="mt-8 max-w-3xl text-sm text-slate-500">{lang === 'tr'
+      ? 'Paket içerikleri temsilidir; keşif sonrası çatı alanı, tüketim ve elektrik altyapısına göre bileşenler değişebilir. Fiyatlar USD bazlı tedarik maliyetine bağlı olduğundan web sitesinde yayımlanmaz; teklif TL olarak, KDV ve montaj dahil verilir.'
+      : 'Package contents are indicative; components may change after the survey based on roof area, consumption and electrical infrastructure. Because pricing depends on USD-based supply costs it is not published on the site; quotes are issued in TRY, including VAT and installation.'}</p>
+  </Section>
+  <CTA lang={lang} />
+</Base>

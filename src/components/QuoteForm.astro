@@ -1,0 +1,98 @@
+---
+import { useTranslations, r } from '../i18n/utils';
+import { site, type Lang } from '../i18n/ui';
+const { lang } = Astro.props as { lang: Lang };
+const t = useTranslations(lang);
+const districts = ['Gündoğan','Yalıkavak','Türkbükü','Gölköy','Torba','Bitez','Ortakent','Gümüşlük','Turgutreis','Konacık','Bodrum Merkez','Gümbet','Yalı','Mumcular'];
+---
+<form id="quote-form" class="card space-y-5" method="POST" action="https://api.web3forms.com/submit" novalidate>
+  <input type="hidden" name="access_key" value={site.web3formsKey} />
+  <input type="hidden" name="subject" value="Luvita Enerji — Yeni keşif talebi" />
+  <input type="hidden" name="from_name" value="luvitaenerji.com" />
+  <input type="hidden" name="lang" value={lang} />
+  <input type="hidden" name="kit" id="kit-field" value="" />
+  <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <div><label class="label" for="name">{t('form.name')} *</label><input class="field" id="name" name="name" required autocomplete="name" /></div>
+    <div><label class="label" for="phone">{t('form.phone')} *</label><input class="field" id="phone" name="phone" type="tel" required autocomplete="tel" placeholder="05xx xxx xx xx" /></div>
+    <div><label class="label" for="email">{t('form.email')}</label><input class="field" id="email" name="email" type="email" autocomplete="email" /></div>
+    <div>
+      <label class="label" for="district">{t('form.district')}</label>
+      <select class="field" id="district" name="district">
+        <option value="">{t('form.select')}</option>
+        {districts.map((d) => <option>{d}</option>)}
+        <option>{t('form.district.other')}</option>
+      </select>
+    </div>
+    <div>
+      <label class="label" for="property">{t('form.property')}</label>
+      <select class="field" id="property" name="property">
+        <option value="">{t('form.select')}</option>
+        <option>{t('form.property.villa')}</option><option>{t('form.property.flat')}</option><option>{t('form.property.site')}</option><option>{t('form.property.business')}</option>
+      </select>
+    </div>
+    <div>
+      <label class="label" for="bill">{t('form.bill')}</label>
+      <select class="field" id="bill" name="bill">
+        <option value="">{t('form.select')}</option>
+        <option>{t('form.bill.1')}</option><option>{t('form.bill.2')}</option><option>{t('form.bill.3')}</option><option>{t('form.bill.4')}</option>
+      </select>
+    </div>
+    <div>
+      <label class="label" for="roof">{t('form.roof')}</label>
+      <select class="field" id="roof" name="roof">
+        <option value="">{t('form.select')}</option>
+        <option>{t('form.roof.tile')}</option><option>{t('form.roof.flat')}</option><option>{t('form.roof.metal')}</option><option>{t('form.roof.other')}</option>
+      </select>
+    </div>
+  </div>
+
+  <fieldset>
+    <legend class="label">{t('form.interest')}</legend>
+    <div class="flex flex-wrap gap-4 text-sm">
+      {[['solar','form.interest.solar'],['storage','form.interest.storage'],['heatpump','form.interest.heatpump']].map(([v,k]) => (
+        <label class="inline-flex items-center gap-2"><input type="checkbox" name="interest" value={v} class="h-4 w-4 rounded border-slate-300 text-primary-800" />{t(k as any)}</label>
+      ))}
+    </div>
+  </fieldset>
+
+  <div><label class="label" for="message">{t('form.message')}</label><textarea class="field" id="message" name="message" rows="4"></textarea></div>
+
+  <label class="flex items-start gap-3 text-sm text-slate-600">
+    <input type="checkbox" name="kvkk" required class="mt-1 h-4 w-4 rounded border-slate-300" />
+    <span>{t('form.consent')} <a href={r('kvkk', lang)} class="underline">{t('footer.kvkk')}</a></span>
+  </label>
+
+  {site.turnstileSiteKey && <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey}></div>}
+
+  <button type="submit" class="btn-primary w-full sm:w-auto" data-label={t('form.submit')} data-sending={t('form.sending')}>{t('form.submit')}</button>
+  <p id="form-status" class="hidden rounded-lg px-4 py-3 text-sm" data-ok={t('form.success')} data-err={t('form.error')} role="status"></p>
+</form>
+{site.turnstileSiteKey && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+<script>
+  const form = document.getElementById('quote-form') as HTMLFormElement;
+  const status = document.getElementById('form-status')!;
+  const btn = form.querySelector('button[type=submit]') as HTMLButtonElement;
+  const kit = new URLSearchParams(location.search).get('kit');
+  if (kit) (document.getElementById('kit-field') as HTMLInputElement).value = kit;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    btn.disabled = true; btn.textContent = btn.dataset.sending!;
+    status.className = 'hidden';
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      const ok = res.ok && (await res.json()).success;
+      status.textContent = ok ? status.dataset.ok! : status.dataset.err!;
+      status.className = ok ? 'rounded-lg bg-teal-50 px-4 py-3 text-sm text-teal-800' : 'rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700';
+      if (ok) form.reset();
+    } catch {
+      status.textContent = status.dataset.err!;
+      status.className = 'rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700';
+    } finally {
+      btn.disabled = false; btn.textContent = btn.dataset.label!;
+    }
+  });
+</script>

@@ -1,0 +1,18 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import SolutionCard from '../components/SolutionCard.astro';
+import CTA from '../components/CTA.astro';
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+const { lang } = Astro.props as { lang: Lang };
+const t = useTranslations(lang);
+const solutions = (await getCollection('solutions')).filter((e) => e.data.lang === lang).sort((a, b) => a.data.order - b.data.order);
+---
+<Base lang={lang} title={t('nav.solutions')} description={t('solutions.sub')}>
+  <Section eyebrow={t('solutions.eyebrow')} title={t('solutions.title')} sub={t('solutions.sub')}>
+    <div class="grid gap-6 md:grid-cols-3">{solutions.map((s) => <SolutionCard s={s} lang={lang} />)}</div>
+  </Section>
+  <CTA lang={lang} />
+</Base>

@@ -1,0 +1,27 @@
+---
+import Icon from './Icon.astro';
+import { r, useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+const { p, lang } = Astro.props as { p: any; lang: Lang };
+const t = useTranslations(lang);
+const d = p.data;
+---
+<article class:list={['card relative flex flex-col', d.featured && 'ring-2 ring-accent-500']}>
+  {d.featured && <span class="absolute -top-3 left-6 rounded-full bg-accent-500 px-3 py-1 text-xs font-bold text-primary-900">{lang === 'tr' ? 'En çok tercih edilen' : 'Most popular'}</span>}
+  <p class="eyebrow">{d.kit.replace('-', ' ').toUpperCase()}</p>
+  <h3 class="mt-1 text-2xl">{d.name}</h3>
+  <p class="text-sm text-slate-500">{d.tagline}</p>
+  <p class="mt-4 font-display text-lg font-bold text-primary-800">{d.capacity}</p>
+  <div class="mt-4">
+    <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">{t('packages.for')}</p>
+    <p class="mt-1 text-sm text-slate-700">{d.forWhom}</p>
+  </div>
+  <div class="mt-4 flex-1">
+    <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">{t('packages.includes')}</p>
+    <ul class="mt-1 space-y-1.5 text-sm text-slate-700">
+      {d.includes.map((i: string) => <li class="flex gap-2"><Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-teal-600" />{i}</li>)}
+    </ul>
+    {d.note && <p class="mt-3 text-xs text-slate-500">{d.note}</p>}
+  </div>
+  <a href={`${r('quote', lang)}?kit=${d.kit}`} class:list={[d.featured ? 'btn-primary' : 'btn-secondary', 'mt-6']}>{t('packages.cta')}</a>
+</article>

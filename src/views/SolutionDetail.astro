@@ -1,0 +1,36 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import CTA from '../components/CTA.astro';
+import { useTranslations, r } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+const { entry, lang } = Astro.props as { entry: any; lang: Lang };
+const t = useTranslations(lang);
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<Base lang={lang} title={d.seoTitle ?? d.title} description={d.seoDescription ?? d.summary}>
+  <section class="bg-primary-900 py-16 text-white">
+    <div class="container-x">
+      <a href={r('solutions', lang)} class="text-sm text-slate-300 hover:text-white">← {t('nav.solutions')}</a>
+      <div class="mt-4 flex items-start gap-4">
+        <span class="hidden h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/10 sm:inline-flex"><Icon name={d.icon} class="h-8 w-8" /></span>
+        <div>
+          <h1 class="text-3xl text-white sm:text-5xl">{d.title}</h1>
+          <p class="mt-4 max-w-2xl text-lg text-slate-300">{d.summary}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="container-x grid gap-12 py-14 lg:grid-cols-[1fr_320px]">
+    <article class="prose-luvita max-w-3xl"><Content /></article>
+    <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+      <div class="card">
+        <ul class="space-y-3 text-sm text-slate-700">{d.highlights.map((h: string) => <li class="flex gap-2"><Icon name="check" class="mt-0.5 h-4 w-4 shrink-0 text-teal-600" />{h}</li>)}</ul>
+        <a href={r('quote', lang)} class="btn-primary mt-6 w-full">{t('sol.cta')}</a>
+      </div>
+    </aside>
+  </div>
+  <CTA lang={lang} />
+</Base>

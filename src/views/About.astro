@@ -1,0 +1,45 @@
+---
+import Base from '../layouts/Base.astro';
+import CTA from '../components/CTA.astro';
+import { useTranslations } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+const { lang } = Astro.props as { lang: Lang };
+const t = useTranslations(lang);
+const tr = lang === 'tr';
+---
+<Base lang={lang} title={t('about.title')} description={tr ? 'Luvita Enerji: Bodrum merkezli, Luvita Teknoloji bünyesinde güneş enerjisi, depolama ve ısı pompası çözüm ortağı.' : 'Luvita Enerji: Bodrum-based solar, storage and heat-pump solution partner, part of Luvita Teknoloji.'}>
+  <div class="container-x max-w-3xl py-14">
+    <p class="eyebrow">{t('about.title')}</p>
+    <h1 class="mt-2 text-3xl sm:text-4xl">{tr ? 'Enerjiyi daha ulaşılabilir, verimli ve ekonomik hâle getiren çözümler.' : 'Solutions that make energy more accessible, efficient and economical.'}</h1>
+    <div class="prose-luvita mt-8">
+      {tr ? (
+        <>
+          <p><strong>Luvita Enerji</strong>, Bodrum Gündoğan merkezli Luvita Teknoloji Enerji Yazılım San. ve Tic. Ltd. Şti. bünyesinde faaliyet gösteren enerji çözümleri markasıdır. Konut ve işletmeler için çatı güneş enerjisi sistemleri, enerji depolama ve ısı pompası kurulumlarını projelendiriyor, kuruyor ve devreye alıyoruz.</p>
+          <h2>Yaklaşımımız</h2>
+          <p>Hedefimiz şebekeyi ortadan kaldırmak değil; doğru boyutlandırılmış sistemlerle şebekenin yükünü hafifletmek, faturayı düşürmek ve kesintilere karşı güvence sağlamaktır. Şebekenin ulaşmadığı yerlerde ise enerjiye erişimin kendisini sunuyoruz.</p>
+          <p>Güneş enerjisi ve ısı pompasını seçmemizin nedeni ideolojik değil, pratiktir: bugün ulaşılabilir teknolojiler içinde en yüksek verimi ve en kısa sürede geri dönen yatırımı bu ikili sağlıyor. Her teklifimizde yıllık üretim tahmini ve amorti süresi yazılı olarak yer alır; teklifte olmayan bir vaadi sözlü olarak da vermeyiz.</p>
+          <h2>Ekipman ve ortaklar</h2>
+          <p>Antalya'da üretim yapan <strong>CW Enerji</strong> ve <strong>TommaTech</strong> ürün ailelerini kullanıyoruz: N-type TOPCon paneller, on-grid ve hibrit inverterler, LFP lityum bataryalar ve inverter teknolojili ısı pompaları. Yerli üretim, Türkiye'de servis ve yedek parça erişimi anlamına gelir.</p>
+          <h2>Sürdürülebilirlik</h2>
+          <p>Kurduğumuz her sistem fosil yakıt tüketimini ve karbon salımını azaltır. Bunu bir pazarlama sloganı olarak değil, işimizin doğal sonucu ve çalışma prensibi olarak görüyoruz; önceliğimiz müşterimizin verimliliği, güvenilirliği ve maliyet avantajıdır.</p>
+          <h2>Luvita Teknoloji</h2>
+          <p>Ana şirketimiz Luvita Teknoloji, enerji ve yazılım alanlarında faaliyet gösterir. Enerji sistemlerinde izleme, raporlama ve tüketim analizi için kendi yazılım yetkinliğimizi kullanıyoruz.</p>
+        </>
+      ) : (
+        <>
+          <p><strong>Luvita Enerji</strong> is the energy-solutions brand of Luvita Teknoloji Enerji Yazılım San. ve Tic. Ltd. Şti., based in Gündoğan, Bodrum. We design, install and commission rooftop solar, energy storage and heat-pump systems for homes and businesses.</p>
+          <h2>Our approach</h2>
+          <p>Our goal is not to take you off the grid; it is to lighten the grid's load with correctly sized systems, lower your bill and protect you against outages. Where the grid doesn't reach, we provide access to energy itself.</p>
+          <p>We chose solar and heat pumps for practical, not ideological, reasons: among the technologies available today, this pair delivers the highest efficiency and the fastest payback. Every quote includes an annual generation estimate and a payback period in writing; we don't make verbal promises that aren't in the quote.</p>
+          <h2>Equipment and partners</h2>
+          <p>We use the <strong>CW Enerji</strong> and <strong>TommaTech</strong> product families, manufactured in Antalya: N-type TOPCon panels, grid-tied and hybrid inverters, LFP lithium batteries and inverter-driven heat pumps. Local manufacturing means service and spare parts are available in Türkiye.</p>
+          <h2>Sustainability</h2>
+          <p>Every system we install reduces fossil-fuel consumption and carbon emissions. We see this as the natural result of our work and an operating principle, not a marketing slogan; our priority is our customers' efficiency, reliability and cost advantage.</p>
+          <h2>Luvita Teknoloji</h2>
+          <p>Our parent company, Luvita Teknoloji, operates in energy and software. We apply our own software capability to monitoring, reporting and consumption analysis of the energy systems we install.</p>
+        </>
+      )}
+    </div>
+  </div>
+  <CTA lang={lang} />
+</Base>

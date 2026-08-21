@@ -1,0 +1,27 @@
+---
+interface Props { class?: string; variant?: 'dark' | 'light'; showText?: boolean }
+const { class: cls = 'h-9', variant = 'dark', showText = true } = Astro.props;
+const ink = variant === 'dark' ? '#0F2A44' : '#FFFFFF';
+---
+<span class:list={['inline-flex items-center gap-2.5', cls]}>
+  <!-- Ev + güneş paneli çatı + güneş yayı + ısı pompası fan halkası -->
+  <svg viewBox="0 0 64 64" class="h-full w-auto" aria-hidden="true" fill="none">
+    <!-- güneş yayı -->
+    <path d="M6 30a20 20 0 0 1 10-17" stroke="#F59E0B" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M4 20 L9 23" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+    <!-- ev gövdesi -->
+    <path d="M18 58V34l18-16 18 16v24z" fill={ink}/>
+    <!-- panel çatı: beyaz hücre ızgarası -->
+    <path d="M14 36l22-19 22 19" stroke={ink} stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M18 33.5 L36 18 L54 33.5" stroke="#14B8A6" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M27 26 L30 30 M36 18 L36 31 M45 26 L42 30 M24 29 L48 29" stroke="#14B8A6" stroke-width="1.6"/>
+    <!-- ısı pompası fan halkası (kapı yerine) -->
+    <circle cx="36" cy="45" r="7" stroke="#F59E0B" stroke-width="3"/>
+    <path d="M36 38v14M29 45h14" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+  {showText && (
+    <span class="font-display leading-none">
+      <span class="block text-lg font-extrabold tracking-tight" style={`color:${ink}`}>Luvita <span class="text-accent-500">Enerji</span></span>
+    </span>
+  )}
+</span>

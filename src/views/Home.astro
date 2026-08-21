@@ -1,0 +1,102 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import SolutionCard from '../components/SolutionCard.astro';
+import PackageCard from '../components/PackageCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CTA from '../components/CTA.astro';
+import Icon from '../components/Icon.astro';
+import { useTranslations, r } from '../i18n/utils';
+import type { Lang } from '../i18n/ui';
+const { lang } = Astro.props as { lang: Lang };
+const t = useTranslations(lang);
+const byLang = (c: any[]) => c.filter((e) => e.data.lang === lang).sort((a, b) => a.data.order - b.data.order);
+const solutions = byLang(await getCollection('solutions'));
+const packages = byLang(await getCollection('packages'));
+const faq = byLang(await getCollection('faq')).slice(0, 4);
+const why = [['bolt','why.1'],['hand','why.2'],['shield','why.3'],['coin','why.4']] as const;
+const desc = lang === 'tr'
+  ? 'Bodrum’da konut ve işletmeler için çatı GES, enerji depolama ve ısı pompası. Doğru boyutlandırma, yerli ekipman, yazılı amorti hesabı.'
+  : 'Rooftop solar, energy storage and heat pumps for homes and businesses in Bodrum. Correct sizing, Turkish-made equipment, written payback calculation.';
+---
+<Base lang={lang} title={lang === 'tr' ? 'Luvita Enerji — Bodrum Güneş Enerjisi ve Isı Pompası' : 'Luvita Enerji — Solar & Heat Pumps in Bodrum'} description={desc}>
+  <!-- HERO -->
+  <section class="relative overflow-hidden bg-primary-900 text-white">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(245,158,11,0.25),transparent_55%),radial-gradient(ellipse_at_bottom_left,_rgba(20,184,166,0.2),transparent_50%)]"></div>
+    <div class="container-x relative grid items-center gap-12 py-20 sm:py-28 lg:grid-cols-[1.15fr_1fr]">
+      <div>
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-slate-200">
+          <span class="h-1.5 w-1.5 rounded-full bg-accent-500"></span>{t('hero.badge')}
+        </span>
+        <h1 class="mt-6 text-4xl leading-[1.1] text-white sm:text-5xl lg:text-6xl">{t('hero.title')}</h1>
+        <p class="mt-6 max-w-xl text-lg text-slate-300">{t('hero.sub')}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={r('quote', lang)} class="btn-primary">{t('hero.cta')}</a>
+          <a href={r('packages', lang)} class="btn-ghost">{t('hero.cta2')}</a>
+        </div>
+        <dl class="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-white/10 pt-8 text-sm">
+          <div><dt class="text-slate-400">{lang === 'tr' ? 'Amorti' : 'Payback'}</dt><dd class="mt-1 font-display text-2xl font-bold">4–6 <span class="text-base font-medium text-slate-300">{lang === 'tr' ? 'yıl' : 'yrs'}</span></dd></div>
+          <div><dt class="text-slate-400">{lang === 'tr' ? 'Panel garantisi' : 'Panel warranty'}</dt><dd class="mt-1 font-display text-2xl font-bold">25 <span class="text-base font-medium text-slate-300">{lang === 'tr' ? 'yıl' : 'yrs'}</span></dd></div>
+          <div><dt class="text-slate-400">{lang === 'tr' ? 'Isı pompası COP' : 'Heat pump COP'}</dt><dd class="mt-1 font-display text-2xl font-bold">3–5×</dd></div>
+        </dl>
+      </div>
+      <div class="relative hidden lg:block" aria-hidden="true">
+        <!-- stilize ev + panel illüstrasyonu -->
+        <svg viewBox="0 0 400 320" class="w-full drop-shadow-2xl" fill="none">
+          <circle cx="330" cy="60" r="34" fill="#F59E0B" opacity=".9"/>
+          <path d="M40 300h320" stroke="#ffffff22" stroke-width="2"/>
+          <path d="M70 300V170l130-95 130 95v130z" fill="#153553" stroke="#ffffff22"/>
+          <path d="M55 176 200 70l145 106" stroke="#fff" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+          <g stroke="#14B8A6" stroke-width="2">
+            <path d="M85 172 200 88l115 84"/><path d="M200 88v84M143 130l-58 42M257 130l58 42"/><path d="M110 158l180 0M138 137l124 0M166 116l68 0"/>
+          </g>
+          <rect x="176" y="220" width="48" height="80" rx="4" fill="#0a1d30"/>
+          <rect x="96" y="210" width="44" height="44" rx="4" fill="#0a1d30"/><rect x="260" y="210" width="44" height="44" rx="4" fill="#0a1d30"/>
+          <rect x="236" y="252" width="40" height="48" rx="4" fill="#1b4369" stroke="#F59E0B" stroke-width="2"/>
+          <circle cx="256" cy="276" r="12" stroke="#F59E0B" stroke-width="3"/>
+          <path d="M256 264v24M244 276h24" stroke="#F59E0B" stroke-width="2"/>
+          <path d="M300 246c14 0 14 10 28 10s14-10 28-10" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <Section eyebrow={t('solutions.eyebrow')} title={t('solutions.title')} sub={t('solutions.sub')}>
+    <div class="grid gap-6 md:grid-cols-3">{solutions.map((s) => <SolutionCard s={s} lang={lang} />)}</div>
+  </Section>
+
+  <Section eyebrow={t('why.eyebrow')} title={t('why.title')} class="bg-slate-50">
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      {why.map(([icon, k]) => (
+        <div>
+          <span class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white text-accent-600 shadow-sm"><Icon name={icon} class="h-6 w-6" /></span>
+          <h3 class="mt-4 text-lg">{t(`${k}.t` as any)}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600">{t(`${k}.d` as any)}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <Section eyebrow={t('packages.eyebrow')} title={t('packages.title')} sub={t('packages.sub')}>
+    <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">{packages.map((p) => <PackageCard p={p} lang={lang} />)}</div>
+  </Section>
+
+  <Section eyebrow={t('process.eyebrow')} title={t('process.title')} class="bg-slate-50">
+    <ol class="grid gap-8 md:grid-cols-4">
+      {[1,2,3,4].map((n) => (
+        <li class="relative">
+          <span class="font-display text-5xl font-extrabold text-primary-100">0{n}</span>
+          <h3 class="mt-2 text-lg">{t(`process.${n}.t` as any)}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-slate-600">{t(`process.${n}.d` as any)}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <Section title={t('faq.title')}>
+    <div class="max-w-3xl"><FAQ items={faq} /></div>
+  </Section>
+
+  <CTA lang={lang} />
+</Base>

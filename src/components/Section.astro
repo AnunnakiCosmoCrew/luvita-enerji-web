@@ -1,0 +1,13 @@
+---
+const { eyebrow, title, sub, id, class: cls = '' } = Astro.props as { eyebrow?: string; title: string; sub?: string; id?: string; class?: string };
+---
+<section id={id} class:list={['py-16 sm:py-20', cls]}>
+  <div class="container-x">
+    <div class="max-w-2xl">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h2 class="mt-2 text-3xl sm:text-4xl">{title}</h2>
+      {sub && <p class="mt-4 text-lg text-slate-600">{sub}</p>}
+    </div>
+    <div class="mt-10"><slot /></div>
+  </div>
+</section>
