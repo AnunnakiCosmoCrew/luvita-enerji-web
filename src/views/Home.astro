@@ -42,21 +42,49 @@ const desc = lang === 'tr'
         </dl>
       </div>
       <div class="relative hidden lg:block" aria-hidden="true">
-        <!-- stilize ev + panel illüstrasyonu -->
-        <svg viewBox="0 0 400 320" class="w-full drop-shadow-2xl" fill="none">
-          <circle cx="330" cy="60" r="34" fill="#F59E0B" opacity=".9"/>
-          <path d="M40 300h320" stroke="#ffffff22" stroke-width="2"/>
-          <path d="M70 300V170l130-95 130 95v130z" fill="#153553" stroke="#ffffff22"/>
-          <path d="M55 176 200 70l145 106" stroke="#fff" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
-          <g stroke="#14B8A6" stroke-width="2">
-            <path d="M85 172 200 88l115 84"/><path d="M200 88v84M143 130l-58 42M257 130l58 42"/><path d="M110 158l180 0M138 137l124 0M166 116l68 0"/>
+        <!-- Perspektifli panel dizisi -->
+        <svg viewBox="0 0 520 420" class="w-full" fill="none">
+          <defs>
+            <linearGradient id="cell" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1e3a5f"/><stop offset="1" stop-color="#0b1b2e"/>
+            </linearGradient>
+            <linearGradient id="glare" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff" stop-opacity=".18"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2a3442"/><stop offset="1" stop-color="#151c27"/>
+            </linearGradient>
+          </defs>
+          <!-- çatı yüzeyi -->
+          <path d="M20 300 L200 120 L520 120 L520 300 Z" fill="url(#roof)"/>
+          <path d="M20 300 L200 120" stroke="#ffffff1a" stroke-width="2"/>
+          <!-- paneller: 3 sıra x 4 sütun, perspektif -->
+          <g transform="skewX(-28)">
+            {[0,1,2].map((r) => [0,1,2,3].map((c) => {
+              const x = 225 + c * 78, y = 150 + r * 52;
+              return (<g>
+                <rect x={x} y={y} width="70" height="44" rx="2" fill="url(#cell)" stroke="#7dd3c8" stroke-opacity=".55" stroke-width="1.2"/>
+                <path d={`M${x+14} ${y}v44M${x+28} ${y}v44M${x+42} ${y}v44M${x+56} ${y}v44M${x} ${y+11}h70M${x} ${y+22}h70M${x} ${y+33}h70`} stroke="#ffffff" stroke-opacity=".07"/>
+                <rect x={x} y={y} width="70" height="44" rx="2" fill="url(#glare)"/>
+              </g>);
+            }))}
           </g>
-          <rect x="176" y="220" width="48" height="80" rx="4" fill="#0a1d30"/>
-          <rect x="96" y="210" width="44" height="44" rx="4" fill="#0a1d30"/><rect x="260" y="210" width="44" height="44" rx="4" fill="#0a1d30"/>
-          <rect x="236" y="252" width="40" height="48" rx="4" fill="#1b4369" stroke="#F59E0B" stroke-width="2"/>
-          <circle cx="256" cy="276" r="12" stroke="#F59E0B" stroke-width="3"/>
-          <path d="M256 264v24M244 276h24" stroke="#F59E0B" stroke-width="2"/>
-          <path d="M300 246c14 0 14 10 28 10s14-10 28-10" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+          <!-- veri kartı -->
+          <g transform="translate(36 250)">
+            <rect width="210" height="128" rx="14" fill="#ffffff" fill-opacity=".96"/>
+            <text x="18" y="30" font-family="ui-sans-serif, system-ui" font-size="11" font-weight="600" fill="#64748b" letter-spacing=".08em">{lang === 'tr' ? 'BUGÜNKÜ ÜRETİM' : "TODAY'S GENERATION"}</text>
+            <text x="18" y="64" font-family="ui-sans-serif, system-ui" font-size="30" font-weight="800" fill="#0F2A44">{lang === 'tr' ? '21,4' : '21.4'} <tspan font-size="14" font-weight="600" fill="#64748b">kWh</tspan></text>
+            <path d="M18 104 C40 100, 50 84, 70 86 S100 70, 120 74 S150 90, 170 80 S185 70, 192 72" stroke="#14B8A6" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M18 104 C40 100, 50 84, 70 86 S100 70, 120 74 S150 90, 170 80 S185 70, 192 72 V110 H18 Z" fill="#14B8A6" fill-opacity=".12"/>
+            <circle cx="192" cy="72" r="3.5" fill="#14B8A6"/>
+          </g>
+          <!-- tasarruf rozeti -->
+          <g transform="translate(330 318)">
+            <rect width="150" height="54" rx="12" fill="#0a1d30" stroke="#ffffff1f"/>
+            <circle cx="24" cy="27" r="10" fill="#F59E0B" fill-opacity=".2"/><path d="M24 20l-4 8h4l-1 6 5-9h-4z" fill="#F59E0B"/>
+            <text x="44" y="23" font-family="ui-sans-serif, system-ui" font-size="10" fill="#94a3b8" letter-spacing=".06em">{lang === 'tr' ? 'ŞEBEKEDEN ÇEKİLEN' : 'GRID IMPORT'}</text>
+            <text x="44" y="42" font-family="ui-sans-serif, system-ui" font-size="15" font-weight="700" fill="#ffffff">−%78</text>
+          </g>
         </svg>
       </div>
     </div>
