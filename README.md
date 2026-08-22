@@ -20,13 +20,15 @@ npm run dev
 npm run check && npm run build
 ```
 
-## Before launch (TODOs in `src/i18n/ui.ts → site`)
+## Launch checklist
 
-1. Phone, WhatsApp number, contact e-mail
-2. Web3Forms access key (`web3formsKey`) and, optionally, Turnstile site key
-3. Domain: set `site` in `astro.config.mjs`, add `public/CNAME`, update `public/robots.txt`
-4. Legal texts (`/kvkk`, `/gizlilik`, `/en/privacy`) reviewed by counsel
-5. Permission to use CW Enerji / TommaTech names as "authorised partner"
+- [x] Phone, WhatsApp number, contact e-mail (`src/i18n/ui.ts → site`)
+- [x] Web3Forms access key — live, verified end to end (real submission delivers mail)
+- [x] Domain `luvitaenerji.com` — GitHub Pages, HTTPS enforced, `www` redirects to apex
+- [ ] Cloudflare Turnstile site key (`turnstileSiteKey`) — only if spam appears
+- [ ] Corporate mailbox `info@luvitaenerji.com` (Cloudflare Email Routing) instead of the personal address
+- [ ] Legal texts (`/kvkk`, `/gizlilik`, `/en/privacy`) reviewed by counsel
+- [ ] Permission to use CW Enerji / TommaTech names as "authorised partner"
 
 ## Editorial rules
 
