@@ -1,0 +1,198 @@
+---
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+import { site, type Lang } from '../i18n/ui';
+import { r, withBase } from '../i18n/utils';
+import qr from '../data/qr.json';
+
+const { lang } = Astro.props as { lang: Lang };
+const tr = lang === 'tr';
+
+const person = { name: 'Mert Ertuğrul', city: 'Bodrum, Muğla' };
+const phoneHref = `tel:${site.phone.replace(/\s/g, '')}`;
+const waHref = `https://wa.me/${site.whatsapp}`;
+const mailHref = `mailto:${site.email}?subject=${encodeURIComponent(tr ? 'Enerji sistemi hakkında' : 'About an energy system')}`;
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://luvitaenerji.com';
+
+const s = tr
+  ? {
+      title: 'Kartvizit', desc: `${person.name} — Luvita Enerji iletişim bilgileri, QR ile rehbere ekleyin.`,
+      sub: 'Güneş · Depolama · Isı pompası',
+      tagline: 'Konut ve işletmeler için tüketiminize göre boyutlandırılmış, kendini ödeyen enerji sistemleri.',
+      nav: 'İletişim', phone: 'Telefon', wa: 'WhatsApp', waV: 'Hemen yazın', mail: 'E-posta', web: 'Web sitesi',
+      copy: 'Rehbere ekleyin', copyV: 'Bilgileri kopyala', copied: 'Bilgiler kopyalandı', copyFail: 'Kopyalanamadı — bilgileri elle alın',
+      what: 'Ne yapıyoruz',
+      chips: ['Çatı GES', 'Enerji depolama', 'Isı pompası', 'Keşif & projelendirme', 'Kurulum & devreye alma', 'Bakım desteği'],
+      note: 'Keşif ücretsizdir ve taahhüt gerektirmez. Sistemi faturanıza ve çatınıza göre boyutlandırır, teklifte bileşen listesini ve amorti süresini yazılı veririz. Yerli üretim CW Enerji ve TommaTech ekipmanı.',
+      qrTitle: 'QR ile paylaşın', qrGroup: 'QR içeriği',
+      qrBtn: { vcard: 'Rehbere ekle', wa: 'WhatsApp', site: 'Web sitesi', card: 'Bu kart' },
+      qrCap: {
+        vcard: 'Telefon kamerasıyla okutun — iletişim bilgileri doğrudan rehbere eklenir.',
+        wa: 'WhatsApp sohbetini doğrudan açar — numarayı kaydetmeye gerek yok.',
+        site: 'luvitaenerji.com adresini açar.',
+        card: 'Bu kartvizit sayfasının linki: luvitaenerji.com/kartvizit',
+      },
+      cta: 'Ücretsiz keşif talep edin',
+      contact: [person.name, 'Luvita Enerji', `Telefon / WhatsApp: ${site.phone}`, `E-posta: ${site.email}`, `Web: ${siteUrl}`, site.address, site.parent],
+    }
+  : {
+      title: 'Business card', desc: `${person.name} — Luvita Enerji contact details; scan the QR to save to contacts.`,
+      sub: 'Solar · Storage · Heat pump',
+      tagline: 'Energy systems for homes and businesses, sized to your consumption and built to pay for themselves.',
+      nav: 'Contact', phone: 'Phone', wa: 'WhatsApp', waV: 'Message now', mail: 'Email', web: 'Website',
+      copy: 'Save to contacts', copyV: 'Copy details', copied: 'Details copied', copyFail: 'Could not copy — please note the details manually',
+      what: 'What we do',
+      chips: ['Rooftop solar', 'Energy storage', 'Heat pump', 'Survey & design', 'Installation & commissioning', 'Maintenance support'],
+      note: 'The survey is free and non-binding. We size the system to your bill and roof, and put the component list and payback period in writing. Locally made CW Enerji and TommaTech equipment.',
+      qrTitle: 'Share by QR', qrGroup: 'QR content',
+      qrBtn: { vcard: 'Save contact', wa: 'WhatsApp', site: 'Website', card: 'This card' },
+      qrCap: {
+        vcard: 'Scan with your phone camera — the contact is added straight to your address book.',
+        wa: 'Opens a WhatsApp chat directly — no need to save the number.',
+        site: 'Opens luvitaenerji.com.',
+        card: 'Link to this business card: luvitaenerji.com/en/card',
+      },
+      cta: 'Request a free survey',
+      contact: [person.name, 'Luvita Enerji', `Phone / WhatsApp: ${site.phone}`, `Email: ${site.email}`, `Web: ${siteUrl}`, site.address, site.parent],
+    };
+
+const QR = { vcard: qr.vcard, wa: qr.wa, site: qr.site, card: tr ? qr.card_tr : qr.card_en };
+const qrKeys = ['vcard', 'wa', 'site', 'card'] as const;
+
+const rows = [
+  { href: phoneHref, label: s.phone, value: site.phone, icon: 'phone' },
+  { href: waHref, label: s.wa, value: s.waV, icon: 'wa', ext: true },
+  { href: mailHref, label: s.mail, value: site.email, icon: 'mail' },
+  { href: withBase('/'), label: s.web, value: 'luvitaenerji.com', icon: 'globe' },
+];
+const icons: Record<string, string> = {
+  phone: '<path d="M5 3h3.5l1.6 4.2-2 1.4a11.5 11.5 0 0 0 6.3 6.3l1.4-2L20 14.5V18a2 2 0 0 1-2 2A15 15 0 0 1 4 6a2 2 0 0 1 1-3z"/>',
+  wa: '<path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.9L3.5 20.5l4.2-1.1A8.5 8.5 0 1 0 12 3.5z"/><path d="M8.8 9.2c.2 1.6 2.4 3.8 4 4l.9-1.1 1.7.8-.4 1.3c-1.9.5-5.2-2-6.4-4.4l1.3-.6z"/>',
+  mail: '<rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3 7 8.1 5.4a2 2 0 0 0 2.2 0L21 7"/>',
+  globe: '<circle cx="12" cy="12" r="9.2"/><path d="M2.8 12h18.4M12 2.8c2.6 2.8 3.8 5.8 3.8 9.2s-1.2 6.4-3.8 9.2c-2.6-2.8-3.8-5.8-3.8-9.2s1.2-6.4 3.8-9.2z"/>',
+  copy: '<rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M15 9V5.5A2.5 2.5 0 0 0 12.5 3h-7A2.5 2.5 0 0 0 3 5.5v7A2.5 2.5 0 0 0 5.5 15H9"/>',
+};
+const rowCls = 'group flex w-full items-center gap-4 px-6 py-4 text-left transition hover:bg-primary-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-500';
+const icCls = 'grid size-10 shrink-0 place-items-center rounded-xl bg-primary-50 text-primary-800';
+---
+<Base lang={lang} title={s.title} description={s.desc}>
+  <div class="bg-slate-100 py-10 sm:py-16">
+    <article class="mx-auto w-full max-w-[460px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl">
+      <header class="relative overflow-hidden bg-gradient-to-br from-primary-800 to-primary-900 px-6 pb-7 pt-7 text-white">
+        <div class="pointer-events-none absolute -right-16 -top-20 size-64 rounded-full bg-accent-500/25 blur-3xl" aria-hidden="true"></div>
+        <div class="relative flex items-center gap-3">
+          <Logo variant="light" class="h-11" showText={false} />
+          <div class="font-display leading-none">
+            <div class="text-xl font-extrabold tracking-tight">Luvita <span class="text-accent-400">Enerji</span></div>
+            <div class="mt-1 text-xs text-primary-100/80">{s.sub}</div>
+          </div>
+        </div>
+        <div class="relative mt-7">
+          <h1 class="text-3xl font-extrabold tracking-tight text-white">{person.name}</h1>
+          <p class="mt-1 text-sm text-primary-100/85">{person.city}</p>
+        </div>
+        <p class="relative mt-4 max-w-[36ch] text-sm leading-relaxed text-primary-50/90">{s.tagline}</p>
+      </header>
+
+      <nav class="divide-y divide-slate-100" aria-label={s.nav}>
+        {rows.map((row) => (
+          <a class={rowCls} href={row.href} target={row.ext ? '_blank' : undefined} rel={row.ext ? 'noopener' : undefined}>
+            <span class={icCls} aria-hidden="true">
+              <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={icons[row.icon]} />
+            </span>
+            <span class="flex min-w-0 flex-1 flex-col">
+              <span class="text-[11px] font-semibold uppercase tracking-widest text-slate-500">{row.label}</span>
+              <span class="truncate text-[15px] font-medium text-primary-900">{row.value}</span>
+            </span>
+            <span class="text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-primary-800" aria-hidden="true">›</span>
+          </a>
+        ))}
+        <button class={rowCls} type="button" id="copy">
+          <span class={icCls} aria-hidden="true">
+            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={icons.copy} />
+          </span>
+          <span class="flex min-w-0 flex-1 flex-col">
+            <span class="text-[11px] font-semibold uppercase tracking-widest text-slate-500">{s.copy}</span>
+            <span class="truncate text-[15px] font-medium text-primary-900">{s.copyV}</span>
+          </span>
+          <span class="text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-primary-800" aria-hidden="true">›</span>
+        </button>
+      </nav>
+
+      <section class="border-t border-slate-100 px-6 py-6">
+        <p class="eyebrow">{s.what}</p>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          {s.chips.map((c) => <li class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium text-primary-800">{c}</li>)}
+        </ul>
+        <p class="mt-4 text-sm leading-relaxed text-slate-600">{s.note}</p>
+      </section>
+
+      <section class="border-t border-slate-100 bg-slate-50 px-6 py-6" aria-label="QR">
+        <p class="eyebrow text-center">{s.qrTitle}</p>
+        <div class="mx-auto mt-4 w-56 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+          <svg id="qr-svg" class="block h-auto w-full" viewBox={`0 0 ${QR.vcard.n} ${QR.vcard.n}`} shape-rendering="crispEdges" role="img" aria-label="QR">
+            <path id="qr-path" fill="#0A1D30" d={QR.vcard.d} />
+          </svg>
+        </div>
+        <div class="mt-4 flex flex-wrap justify-center gap-1.5" role="group" aria-label={s.qrGroup}>
+          {qrKeys.map((k, i) => (
+            <button type="button" data-qr={k} aria-pressed={i === 0 ? 'true' : 'false'}
+              class="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-primary-800 hover:text-primary-800 aria-pressed:border-primary-800 aria-pressed:bg-primary-800 aria-pressed:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500">
+              {s.qrBtn[k]}
+            </button>
+          ))}
+        </div>
+        <p id="qr-cap" class="mx-auto mt-3 max-w-[34ch] text-center text-xs leading-relaxed text-slate-500">{s.qrCap.vcard}</p>
+      </section>
+
+      <div class="border-t border-slate-100 px-6 py-5">
+        <a class="btn-primary w-full" href={r('quote', lang)}>{s.cta}</a>
+      </div>
+
+      <footer class="border-t border-slate-100 bg-slate-50 px-6 py-4 text-center text-[11px] leading-relaxed text-slate-500">
+        <strong class="text-slate-600">{site.parent}</strong><br />
+        {site.address} · VKN 6091474769 · Bodrum Ticaret Sicili 22756
+      </footer>
+    </article>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"
+    class="pointer-events-none fixed bottom-6 left-1/2 z-50 -translate-x-1/2 translate-y-4 rounded-full bg-primary-900 px-4 py-2 text-sm font-medium text-white opacity-0 shadow-lg transition motion-reduce:transition-none data-[show]:translate-y-0 data-[show]:opacity-100"></div>
+
+  <script is:inline define:vars={{ QR, CAP: s.qrCap, contact: s.contact.join('\n'), copied: s.copied, copyFail: s.copyFail }}>
+    const toast = document.getElementById('toast');
+    let timer;
+    function say(msg) {
+      toast.textContent = msg;
+      toast.setAttribute('data-show', '');
+      clearTimeout(timer);
+      timer = setTimeout(() => toast.removeAttribute('data-show'), 2200);
+    }
+    document.getElementById('copy').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(contact);
+        say(copied);
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = contact;
+        ta.style.cssText = 'position:fixed;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand && document.execCommand('copy');
+        ta.remove();
+        say(ok ? copied : copyFail);
+      }
+    });
+    const svg = document.getElementById('qr-svg');
+    const path = document.getElementById('qr-path');
+    const cap = document.getElementById('qr-cap');
+    const btns = document.querySelectorAll('[data-qr]');
+    btns.forEach((btn) => btn.addEventListener('click', () => {
+      const k = btn.dataset.qr;
+      btns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      svg.setAttribute('viewBox', `0 0 ${QR[k].n} ${QR[k].n}`);
+      path.setAttribute('d', QR[k].d);
+      cap.textContent = CAP[k];
+    }));
+  </script>
+</Base>

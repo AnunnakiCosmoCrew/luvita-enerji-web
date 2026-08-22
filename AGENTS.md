@@ -33,6 +33,8 @@ Sister repo: `AnunnakiCosmoCrew/luvita-web` (software-only corporate site, luvit
 - `src/views/*.astro` — one shared view per page type; `src/pages/**` are thin
   locale wrappers.
 - `src/components/` — Header, Footer, Logo (inline SVG), QuoteForm, cards, CTA.
+- `scripts/gen-qr.py` → `src/data/qr.json` — pre-rendered QR paths for the
+  business-card page (`adr/0004`). Re-run when contact details change.
 
 ## Commands
 
