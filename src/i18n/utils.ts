@@ -1,4 +1,4 @@
-import { ui, defaultLang, routes, type Lang, type UIKey } from './ui';
+import { ui, defaultLang, routes, site, type Lang, type UIKey } from './ui';
 
 /** '' kök yayında, '/alt-yol' GitHub Pages proje sayfasında. */
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -37,3 +37,12 @@ export function alternatePath(pathname: string, target: Lang): string {
 }
 
 export const otherLang = (lang: Lang): Lang => (lang === 'tr' ? 'en' : 'tr');
+
+/** WhatsApp Business bağlantısı — hazır mesajla açılır. */
+export function waLink(lang: Lang): string {
+  const msg =
+    lang === 'tr'
+      ? 'Merhaba, güneş enerjisi / ısı pompası için keşif talep etmek istiyorum.'
+      : 'Hello, I would like to request a site survey for solar / heat pump.';
+  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(msg)}`;
+}

@@ -1,5 +1,5 @@
 ---
-import { r, useTranslations } from '../i18n/utils';
+import { r, useTranslations, waLink } from '../i18n/utils';
 import { site, type Lang } from '../i18n/ui';
 const { lang } = Astro.props as { lang: Lang };
 const t = useTranslations(lang);
@@ -13,7 +13,7 @@ const t = useTranslations(lang);
       </div>
       <div class="mt-8 flex flex-wrap gap-3 md:mt-0">
         <a href={r('quote', lang)} class="btn-primary">{t('cta.btn')}</a>
-        <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener" class="btn-ghost">{t('cta.wa')}</a>
+        <a href={waLink(lang)} target="_blank" rel="noopener" class="btn-ghost">{t('cta.wa')}</a>
       </div>
     </div>
   </div>

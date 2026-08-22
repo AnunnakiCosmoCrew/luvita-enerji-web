@@ -1,13 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import CTA from '../components/CTA.astro';
-import { useTranslations } from '../i18n/utils';
+import { useTranslations, waLink } from '../i18n/utils';
 import { site, type Lang } from '../i18n/ui';
 const { lang } = Astro.props as { lang: Lang };
 const t = useTranslations(lang);
 const rows = [
   [t('contact.address'), site.address, null],
   [t('contact.phone'), site.phone, `tel:${site.phone.replace(/\s/g, '')}`],
+  ['WhatsApp', site.phone, waLink(lang)],
   [t('contact.email'), site.email, `mailto:${site.email}`],
   [t('contact.hours'), t('contact.hours.v'), null],
 ];

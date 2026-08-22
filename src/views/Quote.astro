@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import Icon from '../components/Icon.astro';
-import { useTranslations } from '../i18n/utils';
+import { useTranslations, waLink } from '../i18n/utils';
 import { site, type Lang } from '../i18n/ui';
 const { lang } = Astro.props as { lang: Lang };
 const t = useTranslations(lang);
@@ -28,7 +28,7 @@ const t = useTranslations(lang);
       <div class="card text-sm">
         <p class="font-semibold text-primary-800">{lang === 'tr' ? 'Hemen konuşmak isterseniz' : 'Prefer to talk now?'}</p>
         <a class="mt-2 block hover:underline" href={`tel:${site.phone.replace(/\s/g, '')}`}>{site.phone}</a>
-        <a class="mt-1 block hover:underline" href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener">WhatsApp</a>
+        <a class="mt-1 block hover:underline" href={waLink(lang)} target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </aside>
   </div>
