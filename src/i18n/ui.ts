@@ -12,6 +12,7 @@ export const routes: Record<string, Record<Lang, string>> = {
   contact:   { tr: '/iletisim/',             en: '/en/contact/' },
   privacy:   { tr: '/gizlilik/',             en: '/en/privacy/' },
   kvkk:      { tr: '/kvkk/',                 en: '/en/privacy/' },
+  card:      { tr: '/kartvizit/',            en: '/en/card/' },
   'sol.rooftop': { tr: '/cozumler/cati-ges/',        en: '/en/solutions/rooftop-solar/' },
   'sol.storage': { tr: '/cozumler/enerji-depolama/', en: '/en/solutions/energy-storage/' },
   'sol.heatpump':{ tr: '/cozumler/isi-pompasi/',     en: '/en/solutions/heat-pump/' },
