@@ -25,7 +25,7 @@ export const site = {
   phone: '+90 505 986 80 76',
   whatsapp: '905059868076',
   email: 'mertugrul@luvita.tr',
-  web3formsKey: 'YOUR_WEB3FORMS_ACCESS_KEY', // TODO
+  web3formsKey: '31170821-6815-4775-9e20-6c31866ee001', // Web3Forms public access key (istemci tarafında görünür, gizli değil)
   turnstileSiteKey: '',            // TODO (boşsa Turnstile gösterilmez)
 };
 
