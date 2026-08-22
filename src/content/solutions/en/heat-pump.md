@@ -31,4 +31,4 @@ When your rooftop PV powers the heat pump, heating and cooling costs are largely
 
 ## Product range
 
-CW Enerji Titan (EVI inverter, heating-cooling), Triome and Power series monobloc units, the Aquavera pool series and industrial capacities. A heat-loss calculation is done at the survey and the unit is selected accordingly — not oversized "to be safe".
+Monobloc and split units with EVI inverter technology for heating and cooling, pool heat pumps and industrial capacities. A heat-loss calculation is done at the survey and the unit is selected accordingly — not oversized "to be safe".

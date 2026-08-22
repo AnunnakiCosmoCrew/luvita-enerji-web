@@ -13,11 +13,11 @@ Sister repo: `AnunnakiCosmoCrew/luvita-web` (software-only corporate site, luvit
 - **Keep the two vitrines separate.** This site may say it is "a Luvita Teknoloji
   company" in the footer/about text, but must NOT link to luvita.tr or present the
   software business as a division. luvita-web's ADR-0003 forbids solar copy there.
-- **No dealership claims.** There is no written authorisation from CW Enerji or
-  TommaTech, so the site must never say "yetkili bayi", "yetkili çözüm ortağı",
-  "authorised dealer/partner" or similar. Say only that their equipment is used
-  ("CW Enerji ve TommaTech ürünleriyle kurulum"). Revisit only if a written
-  authorisation arrives.
+- **No dealership claims, and CW Enerji is not named.** There is no written
+  authorisation from any manufacturer, so the site must never say "yetkili bayi",
+  "yetkili çözüm ortağı", "authorised dealer/partner" or similar. CW Enerji was
+  removed from the site entirely (2026-08-22, owner's decision); only TommaTech is
+  named, and only as equipment used. Revisit if a written authorisation arrives.
 - **No prices on the site.** Supply costs are USD-based; the site never shows TL or
   USD prices. Packages are described by capacity + components; price comes via quote.
 - **Brand voice** (see `adr/0003`): technical-but-plain, no hype, benefit-led

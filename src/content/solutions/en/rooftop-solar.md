@@ -28,7 +28,7 @@ Because the grid connection is kept, there is no interruption at night or on clo
 
 ## System components
 
-- **Panels:** CW Enerji / TommaTech 450–640 Wp N-type TOPCon (bifacial and all-black options)
+- **Panels:** TommaTech 450–640 Wp N-type TOPCon (bifacial and all-black options)
 - **Inverter:** TommaTech single- or three-phase grid-tied, with cloud monitoring app
 - **Smart meter & protection:** Smart meter, DC/AC protection board, earthing
 - **Mounting:** Aluminium rails and roof-specific fixings

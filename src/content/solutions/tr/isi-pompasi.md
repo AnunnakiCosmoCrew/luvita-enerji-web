@@ -31,4 +31,4 @@ Isı pompasının elektriğini çatı GES'ten karşıladığınızda ısıtma–
 
 ## Ürün ailesi
 
-CW Enerji Titan (EVI inverter, ısıtma–soğutma), Triome ve Power serisi monoblok modeller, Aquavera havuz serisi ve endüstriyel kapasiteler. Keşifte ısı kaybı hesabı yapılır; cihaz buna göre seçilir, "büyük olsun garanti olsun" diye değil.
+EVI inverter teknolojili monoblok ve split ısıtma–soğutma modelleri, havuz ısı pompaları ve endüstriyel kapasiteler. Keşifte ısı kaybı hesabı yapılır; cihaz buna göre seçilir, "büyük olsun garanti olsun" diye değil.

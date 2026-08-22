@@ -28,7 +28,7 @@ seoDescription: "Bodrum'da konut ve işletmeler için şebeke bağlantılı çat
 
 ## Sistem bileşenleri
 
-- **Paneller:** CW Enerji / TommaTech 450–640 Wp N-type TOPCon (bifacial ve tam siyah seçenekleri mevcut)
+- **Paneller:** TommaTech 450–640 Wp N-type TOPCon (bifacial ve tam siyah seçenekleri mevcut)
 - **İnverter:** TommaTech tek faz veya üç faz on-grid, bulut izleme uygulamalı
 - **Akıllı sayaç & koruma:** Smart meter, DC/AC koruma panosu, topraklama
 - **Konstrüksiyon:** Alüminyum ray ve çatı tipine uygun bağlantı aparatları
