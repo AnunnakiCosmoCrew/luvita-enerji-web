@@ -26,7 +26,7 @@ npm run check && npm run build
 - [x] Web3Forms access key — live, verified end to end (real submission delivers mail)
 - [x] Domain `luvitaenerji.com` — GitHub Pages, HTTPS enforced, `www` redirects to apex
 - [ ] Cloudflare Turnstile site key (`turnstileSiteKey`) — only if spam appears
-- [ ] Corporate mailbox `info@luvitaenerji.com` (Cloudflare Email Routing) instead of the personal address
+- [x] Corporate mailbox `info@luvitaenerji.com` (Cloudflare Email Routing → personal inbox; receive-only)
 - [ ] Legal texts (`/kvkk`, `/gizlilik`, `/en/privacy`) reviewed by counsel
 - [ ] Permission to use CW Enerji / TommaTech names as "authorised partner"
 

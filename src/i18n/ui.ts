@@ -24,7 +24,7 @@ export const site = {
   address: 'Bodrum, Muğla / Türkiye', // il düzeyi — kayıtlı adres konut olduğu için yayımlanmaz (bkz. adr/0002)
   phone: '+90 505 986 80 76',
   whatsapp: '905059868076',
-  email: 'mertugrul@luvita.tr',
+  email: 'info@luvitaenerji.com', // Cloudflare Email Routing ile yönlendiriliyor
   web3formsKey: '31170821-6815-4775-9e20-6c31866ee001', // Web3Forms public access key (istemci tarafında görünür, gizli değil)
   turnstileSiteKey: '',            // TODO (boşsa Turnstile gösterilmez)
 };
