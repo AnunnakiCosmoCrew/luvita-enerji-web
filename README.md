@@ -28,7 +28,7 @@ npm run check && npm run build
 - [ ] Cloudflare Turnstile site key (`turnstileSiteKey`) — only if spam appears
 - [x] Corporate mailbox `info@luvitaenerji.com` (Cloudflare Email Routing → personal inbox; receive-only)
 - [ ] Legal texts (`/kvkk`, `/gizlilik`, `/en/privacy`) reviewed by counsel
-- [ ] Permission to use CW Enerji / TommaTech names as "authorised partner"
+- [x] CW Enerji / TommaTech wording — no authorisation, so the site only states that their equipment is used
 
 ## Editorial rules
 
