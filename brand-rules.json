@@ -40,13 +40,13 @@
       "why": "CLAUDE.md: never publish the registered street address; site.address stays city-level (Bodrum, Muğla). No streetAddress in JSON-LD either (rule inventory 54/118)."
     },
     {
-      "id": "no-map-embed",
+      "id": "no-iframe",
       "kind": "banned",
-      "pattern": "<iframe[^>]*(google\\.com/maps|maps\\.google|openstreetmap|yandex\\.com/map)|maps\\.app\\.goo\\.gl",
+      "pattern": "<iframe\\b|maps\\.app\\.goo\\.gl|google\\.com/maps/embed",
       "paths": [
         "dist/**/*.html"
       ],
-      "why": "CLAUDE.md: no map embeds; a map pin is a street address (rule inventory 118)."
+      "why": "CLAUDE.md: no map embeds and no third parties beyond the quote form's two: no <iframe> of any provider is allowed in the built HTML (Turnstile renders its own at runtime from its script) (rule inventory 118)."
     },
     {
       "id": "no-dealership-claims",
@@ -70,11 +70,11 @@
     {
       "id": "no-prices",
       "kind": "banned",
-      "pattern": "(fiyat|ücret|price|cost|tutar|starting (at|from)|'?den başla|\\+\\s*KDV|KDV (dahil|hariç)|incl\\.? ?VAT|excl\\.? ?VAT|per kWp?|kWp? başına|/\\s*kWp?\\b)[^<]{0,80}?\\d[\\d.,]*\\s*(₺|\\bTL\\b|\\bTRY\\b|\\bUSD\\b|\\bEUR\\b|\\$(?!\\{)|€)|\\d[\\d.,]*\\s*(₺|\\bTL\\b|\\bTRY\\b|\\bUSD\\b|\\bEUR\\b|\\$(?!\\{)|€)[^<]{0,80}?(fiyat|ücret|price|cost|tutar|starting (at|from)|'?den başla|\\+\\s*KDV|KDV (dahil|hariç)|incl\\.? ?VAT|excl\\.? ?VAT|per kWp?|kWp? başına|/\\s*kWp?\\b)",
+      "pattern": "(fiyat|ücret|price|cost|tutar|starting (at|from)|'?den başla|\\+\\s*KDV|KDV (dahil|hariç)|incl\\.? ?VAT|excl\\.? ?VAT|per kWp?|kWp? başına|/\\s*kWp?\\b)(?:[^<]|<[^>]*>){0,120}?\\d[\\d.,]*\\s*(₺|\\bTL\\b|\\bTRY\\b|\\bUSD\\b|\\bEUR\\b|\\$(?!\\{)|€)|\\d[\\d.,]*\\s*(₺|\\bTL\\b|\\bTRY\\b|\\bUSD\\b|\\bEUR\\b|\\$(?!\\{)|€)(?:[^<]|<[^>]*>){0,120}?(fiyat|ücret|price|cost|tutar|starting (at|from)|'?den başla|\\+\\s*KDV|KDV (dahil|hariç)|incl\\.? ?VAT|excl\\.? ?VAT|per kWp?|kWp? başına|/\\s*kWp?\\b)",
       "paths": [
         "dist/**/*.html"
       ],
-      "why": "CLAUDE.md: no prices on the site; supply costs are USD-based, packages are described by capacity and components, price comes via quote (rule inventory 65). Matches a currency amount next to a price word (fiyat, price, KDV, VAT, per kWp...)."
+      "why": "CLAUDE.md: no prices on the site; supply costs are USD-based, packages are described by capacity and components, price comes via quote (rule inventory 65). Matches a currency amount next to a price word (fiyat, price, KDV, VAT, per kWp...). The gap between amount and keyword may contain HTML tags (10.000 ₺ <strong>KDV dahil</strong>)."
     },
     {
       "id": "currency-amounts-review",
@@ -119,6 +119,16 @@
         "/dist/en/get-a-quote/index.html"
       ],
       "why": "CLAUDE.md, Minimal external requests: the only third parties are the form endpoint (Web3Forms) and optional Cloudflare Turnstile, both loaded only on the quote page."
+    },
+    {
+      "id": "quote-page-third-parties-are-web3forms-and-turnstile-only",
+      "kind": "banned",
+      "pattern": "<script\\b[^>]*\\ssrc\\s*=\\s*[\"'](?!https://challenges\\.cloudflare\\.com/turnstile/)(https?:)?//|<form\\b[^>]*\\saction\\s*=\\s*[\"'](?!https://api\\.web3forms\\.com/submit[\"'])(https?:)?//|<(link|img|iframe|source|video|audio|object|embed)\\b(?![^>]*\\brel=\"(canonical|alternate)\")[^>]*\\s(src|href)\\s*=\\s*[\"']?(https?:)?//",
+      "paths": [
+        "/dist/teklif-al/index.html",
+        "/dist/en/get-a-quote/index.html"
+      ],
+      "why": "CLAUDE.md, Minimal external requests: on the quote page the only third parties are the Web3Forms endpoint (form action https://api.web3forms.com/submit) and Cloudflare Turnstile (script https://challenges.cloudflare.com/turnstile/); any other external script, form target or resource is rejected."
     },
     {
       "id": "no-tracking-or-cdn",
