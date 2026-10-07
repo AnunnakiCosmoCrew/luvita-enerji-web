@@ -1,0 +1,42 @@
+name: CI
+
+# The gate for pull requests. deploy.yml runs check + build only after a merge to
+# main, which is the wrong way round for the check that says whether a change is
+# safe to merge; this runs them on the PR, then the brand-and-claim check
+# (luvita-docs#9) over the built site: no link to luvita.tr, city-level address
+# only, no dealership claims, CW Enerji not named, no prices, no independence or
+# free-electricity promises, third-party scripts only on the quote page. Rules and
+# reasons live in brand-rules.json; the script is vendored from
+# project-templates/actions/brand-claim-check.
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Check
+        run: npm run check
+      - name: Build
+        run: npm run build
+      - name: Brand and claim check
+        run: python3 .github/scripts/brand-check.py --rules brand-rules.json
