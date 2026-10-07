@@ -1,0 +1,144 @@
+{
+  "$comment": "Brand-and-claim rules for the Luvita Enerji site (luvita-docs#9, EmirErs W7). Run after `npm run build`: python3 .github/scripts/brand-check.py. Schema: https://github.com/AnunnakiCosmoCrew/project-templates/tree/main/actions/brand-claim-check",
+  "root": ".",
+  "ignore": [
+    "dist/_astro/**"
+  ],
+  "rules": [
+    {
+      "id": "no-link-to-luvita-tr",
+      "kind": "banned",
+      "pattern": "luvita\\.tr\\b",
+      "paths": [
+        "dist/**/*.html",
+        "dist/**/*.xml",
+        "dist/**/*.txt"
+      ],
+      "why": "CLAUDE.md, Keep the two vitrines separate / luvita-docs ADR 0001 exception: this site may say it is a Luvita Teknoloji company but must NOT link to luvita.tr (rule inventory 55)."
+    },
+    {
+      "id": "names-the-company",
+      "kind": "required",
+      "pattern": "Luvita Teknoloji",
+      "paths": [
+        "dist/**/*.html"
+      ],
+      "exclude": [
+        "/dist/404.html"
+      ],
+      "why": "luvita-docs ADR 0001 (Luvi Enerji exception) / adr/0002: the footer names the entity in text form, unlinked, so a reviewer verifying the company can identify it."
+    },
+    {
+      "id": "no-street-address",
+      "kind": "banned",
+      "pattern": "yal[ıi]kent|\\b69\\s*/\\s*25\\b|g[üu]ndo[ğg]an\\s+mah|streetAddress",
+      "paths": [
+        "dist/**/*.html",
+        "dist/**/*.xml",
+        "dist/**/*.txt"
+      ],
+      "why": "CLAUDE.md: never publish the registered street address; site.address stays city-level (Bodrum, Muğla). No streetAddress in JSON-LD either (rule inventory 54/118)."
+    },
+    {
+      "id": "no-map-embed",
+      "kind": "banned",
+      "pattern": "<iframe[^>]*(google\\.com/maps|maps\\.google|openstreetmap|yandex\\.com/map)|maps\\.app\\.goo\\.gl",
+      "paths": [
+        "dist/**/*.html"
+      ],
+      "why": "CLAUDE.md: no map embeds; a map pin is a street address (rule inventory 118)."
+    },
+    {
+      "id": "no-dealership-claims",
+      "kind": "banned",
+      "pattern": "yetkili (bayi|satıcı|çözüm ortağı|servis|distribütör)|authori[sz]ed (dealer|partner|reseller|distributor|installer)|official (dealer|partner|reseller)|certified (partner|dealer)",
+      "paths": [
+        "dist/**/*.html"
+      ],
+      "why": "CLAUDE.md: no dealership claims; there is no written authorisation from any manufacturer (rule inventory 65)."
+    },
+    {
+      "id": "cw-enerji-not-named",
+      "kind": "banned",
+      "pattern": "\\bCW[\\s-]?Enerji\\b|cwenerji",
+      "paths": [
+        "dist/**/*.html",
+        "dist/**/*.xml"
+      ],
+      "why": "CLAUDE.md: CW Enerji was removed from the site entirely (2026-08-22, owner's decision); only TommaTech is named, and only as equipment used (rule inventory 65)."
+    },
+    {
+      "id": "no-prices",
+      "kind": "banned",
+      "pattern": "(fiyat|ücret|price|cost|tutar|starting (at|from)|'?den başla|\\+\\s*KDV|KDV (dahil|hariç)|incl\\.? ?VAT|excl\\.? ?VAT|per kWp?|kWp? başına|/\\s*kWp?\\b)[^<]{0,80}?\\d[\\d.,]*\\s*(₺|\\bTL\\b|\\bTRY\\b|\\bUSD\\b|\\bEUR\\b|\\$(?!\\{)|€)|\\d[\\d.,]*\\s*(₺|\\bTL\\b|\\bTRY\\b|\\bUSD\\b|\\bEUR\\b|\\$(?!\\{)|€)[^<]{0,80}?(fiyat|ücret|price|cost|tutar|starting (at|from)|'?den başla|\\+\\s*KDV|KDV (dahil|hariç)|incl\\.? ?VAT|excl\\.? ?VAT|per kWp?|kWp? başına|/\\s*kWp?\\b)",
+      "paths": [
+        "dist/**/*.html"
+      ],
+      "why": "CLAUDE.md: no prices on the site; supply costs are USD-based, packages are described by capacity and components, price comes via quote (rule inventory 65). Matches a currency amount next to a price word (fiyat, price, KDV, VAT, per kWp...)."
+    },
+    {
+      "id": "currency-amounts-review",
+      "kind": "banned",
+      "pattern": "(₺|\\bTL\\b|\\bTRY\\b|\\bUSD\\b|\\bEUR\\b|\\$(?!\\{)|€)\\s*\\d|\\d[\\d.,]*\\s*(₺|\\bTL\\b|\\bTRY\\b|\\bUSD\\b|\\bEUR\\b|\\$(?!\\{)|€)",
+      "paths": [
+        "dist/**/*.html"
+      ],
+      "allow": [
+        "0 – 2.500 ₺",
+        "2.500 – 5.000 ₺",
+        "5.000 – 10.000 ₺",
+        "10.000 ₺ üzeri",
+        "0 – 2,500 ₺",
+        "2,500 – 5,000 ₺",
+        "5,000 – 10,000 ₺",
+        "Over 10,000 ₺",
+        "Aylık 2.500–6.000 ₺ fatura ödeyen",
+        "with a monthly bill of 2,500–6,000 ₺"
+      ],
+      "severity": "warn",
+      "why": "CLAUDE.md: no prices on the site. Any other currency amount is reported for a human to confirm it is a customer's bill bracket, not a price. The quote form's bill brackets and the audience line are allow-listed."
+    },
+    {
+      "id": "no-independence-or-free-electricity-promise",
+      "kind": "banned",
+      "pattern": "%\\s*100\\s*(enerji\\s*)?bağımsız|yüzde yüz bağımsız|100\\s*%\\s*(energy\\s*)?independen|bedava elektrik|ücretsiz elektrik|free electricity|elektrik faturası(nı|nız[ıi])? sıfır|sıfır fatura|zero (electricity )?bill",
+      "paths": [
+        "dist/**/*.html"
+      ],
+      "why": "CLAUDE.md / adr/0003 brand voice: never promise \"%100 bağımsızlık\" or \"bedava elektrik\" (rule inventory 65)."
+    },
+    {
+      "id": "third-party-scripts-only-on-quote-page",
+      "kind": "banned",
+      "pattern": "<script[^>]*\\ssrc=[\"']https?://|web3forms\\.com|challenges\\.cloudflare\\.com|cf-turnstile",
+      "paths": [
+        "dist/**/*.html"
+      ],
+      "exclude": [
+        "/dist/teklif-al/index.html",
+        "/dist/en/get-a-quote/index.html"
+      ],
+      "why": "CLAUDE.md, Minimal external requests: the only third parties are the form endpoint (Web3Forms) and optional Cloudflare Turnstile, both loaded only on the quote page."
+    },
+    {
+      "id": "no-tracking-or-cdn",
+      "kind": "banned",
+      "pattern": "googletagmanager|google-analytics|gtag\\(|plausible\\.io|hotjar|fonts\\.googleapis|fonts\\.gstatic|cdn\\.jsdelivr|unpkg\\.com|cdnjs\\.cloudflare",
+      "paths": [
+        "dist/**/*.html",
+        "dist/**/*.css"
+      ],
+      "why": "CLAUDE.md: no analytics SDKs, no web fonts, no CDN embeds."
+    },
+    {
+      "id": "no-internal-product-names",
+      "kind": "banned",
+      "pattern": "WordPower|\\bYaren\\b|Luvi Energy",
+      "paths": [
+        "dist/**/*.html",
+        "dist/**/*.xml"
+      ],
+      "why": "LUVITA.md, Brands: public names only; \"Luvi Energy\" was the earlier working brand, the public brand is Luvita Enerji (rule inventory 58)."
+    }
+  ]
+}
